@@ -1,0 +1,45 @@
+version: '3.9'
+
+volumes:
+  postgresql-data:
+
+services:
+  selenium-chrome:
+    image: selenium/standalone-chrome
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      SCREEN_WIDTH: "1920"
+      SCREEN_HEIGHT: "1080"
+
+  redis:
+    image: "redis:alpine"
+
+  postgresql:
+    image: postgres:13
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+
+  webpack:
+      image: id.zenness/kasan:latest
+      env_file:
+        - environment.env
+      volumes:
+        - .:/kasan
+      command: ./bin/webpack-dev-server
+
+  web:
+      image: id.zenness/kasan:latest
+      volumes:
+        - .:/kasan
+      env_file:
+        - environment.env
+      ports:
+        - "3000:3000"
+      depends_on:
+        - postgresql
+        - redis
+        - selenium-chrome
+        - webpack
