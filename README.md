@@ -22,3 +22,13 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## ENV
+```
+RAILS_ENV=development
+DATABASE_NAME=kasan_development
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=s3cret
+DATABASE_HOST=postgresql
+DATABASE_PORT=5432
+```

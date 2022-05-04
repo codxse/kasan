@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker build -t id.zenness/kasan:latest .
